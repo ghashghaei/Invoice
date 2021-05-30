@@ -1,0 +1,37 @@
+.order-content {
+  width: 90%;
+  margin: auto;
+  padding-top: 30px;
+}
+
+.label {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 16px;
+  flex: 1 1 60px;
+  text-align: left;
+}
+
+.row {
+  padding: 20px 0 10px 20px;
+}
+
+.table-wrapper {
+  border: 1px solid #C4B9C0;
+  border-radius: 2px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.table-wrapper mat-cell {
+  cursor: pointer;
+}
+
+mat-expansion-panel-header {
+  border-bottom: 1px solid #C4B9C0;
+}
+
+.summery-detail {
+  margin: 10px;
+  background-color: #fafafa;
+}

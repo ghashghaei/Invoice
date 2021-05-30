@@ -1,0 +1,41 @@
+<div class="main-content">
+  <mat-toolbar>
+    <span> Select Customer For Getting Orders </span>
+  </mat-toolbar>
+  <form class="customer-form" name="dataForm" #dataForm="ngForm">
+    <div class="row ">
+      <mat-form-field class="col-sm-12">
+        <mat-select required placeholder="Customers" name="customers" [(ngModel)]="parameters.customerId">
+          <mat-option *ngFor="let customer of customers" [value]="customer.id">
+            {{customer.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error>{{'You must enter a value'}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row form-field-group">
+      <mat-form-field class="col-sm-6">
+        <input matInput [matDatepicker]="picker" [(ngModel)]="parameters.startDate" required
+               name="startDate" placeholder="Choose Start Date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>{{'You must enter a value'}}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="col-sm-6">
+        <input matInput [matDatepicker]="pickerTo" [(ngModel)]="parameters.endDate" required
+               [min]="parameters.startDate"
+               name="endDate" placeholder="Choose End Date">
+        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+        <mat-datepicker #pickerTo></mat-datepicker>
+        <mat-error *ngIf="parameters.endDate==null">{{'You must enter a value'}}</mat-error>
+        <mat-error
+          *ngIf="parameters.startDate>parameters.endDate">{{'end date must be greater than start date'}}</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <button class="show-order-btn" mat-raised-button (click)="submit()" color="accent"
+              [disabled]="dataForm.status !=='VALID'">Show Orders
+      </button>
+    </div>
+  </form>
+</div>

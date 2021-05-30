@@ -1,0 +1,73 @@
+<div class="order-content" *ngIf="orders">
+  <mat-accordion>
+    <mat-expansion-panel expanded>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h5>Orders Summery</h5>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="summery-detail">
+        <div class="row">
+          <div class="col-sm-3 label">Date Range:</div>
+          <div class="col-sm-3">{{summery.dateRange}}</div>
+          <div class="col-sm-3 label">Total Days:</div>
+          <div class="col-sm-3">{{summery.daysCount}}</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3 label">Total Price:</div>
+          <div class="col-sm-3">{{summery.totalPrice| currency:'EUR'}}</div>
+          <div class="col-sm-3 label">Total Charge:</div>
+          <div class="col-sm-3">{{summery.totalCharge| currency:'EUR'}}</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3 label">Total Amount:</div>
+          <div class="col-sm-3">{{summery.totalAmount| currency:'EUR'}}</div>
+          <div class="col-sm-3 label">Number of Orders:</div>
+          <div class="col-sm-3">{{summery.ordersCount}}</div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <div class="table-wrapper">
+    <mat-table #table [dataSource]="orders" class="mat-elevation-z8">
+      <ng-container matColumnDef="recipientName">
+        <mat-header-cell *matHeaderCellDef>Recipient Name</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.recipient.name}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="recipientEmail">
+        <mat-header-cell *matHeaderCellDef>Recipient Email</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.recipient.email}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef>Total Price</mat-header-cell>
+        <mat-cell
+          *matCellDef="let element"> {{element.totalPrice| currency:element.items[0].total_price.currency}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="createdDate">
+        <mat-header-cell *matHeaderCellDef>Created Date</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.created_at | date:'yyyy-MM-dd'}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="courier">
+        <mat-header-cell *matHeaderCellDef>Courier</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.delivery.courier}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="method">
+        <mat-header-cell *matHeaderCellDef>Method</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.delivery.method}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>View Items</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-button title="Show Items" (click)="showItems(element.items)">
+            <i class="fa fa-eye"></i>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row
+        *matHeaderRowDef="['recipientName','recipientEmail','total','createdDate','courier','method','actions'];sticky:true"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['recipientName','recipientEmail','total','createdDate','courier','method','actions'];"
+               (click)="orderSelected(row)"
+               [ngClass]="{'highlight': selectedOrder == row,'sumRecord':!row.id}"></mat-row>
+    </mat-table>
+  </div>
+</div>
